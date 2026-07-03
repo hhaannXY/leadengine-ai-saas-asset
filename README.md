@@ -145,8 +145,6 @@ https://x.com/17rainLF
 
 **Telegram**
 
-(@yourtelegram)
-
 ---
 
 > This repository intentionally does **not** contain the production source code.
