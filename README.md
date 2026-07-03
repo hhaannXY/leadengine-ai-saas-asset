@@ -41,8 +41,4 @@ This platform is engineered as a highly scalable, production-grade B2B solution.
 
 ---
 
-## 🎯 Live UI Demonstration
-*   **Public Landing Page:** https://vercel.app
-*   **Video Walkthrough:** DM to receive the private Loom video demo showcasing 42 active endpoints, multi-tenant database isolation, and White-Label routing in real-time.
-
 *To initiate a secure transaction via Escrow.com or request architectural logs, please contact the founder directly.*
