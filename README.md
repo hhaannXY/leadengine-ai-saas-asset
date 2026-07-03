@@ -143,8 +143,6 @@ midorimavpotoke@gmail.com
 
 https://x.com/17rainLF
 
-**Telegram**
-
 ---
 
 > This repository intentionally does **not** contain the production source code.
