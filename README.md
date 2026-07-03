@@ -1,6 +1,6 @@
 # 🚀 [FOR SALE] LeadEngine AI - B2B SaaS Codebase Asset
 
-**Price:** $12,000 USD (Fixed / Non-Negotiable)  
+**Price:** $12,000 USD (Asking)  
 **Status:** 100% Production-Ready, Pre-Revenue, Day-One Launch Asset  
 **Transaction Method:** Safely secured via Escrow.com or Crypto (USDT/USDC)  
 **Contact for Loom Demo:** DM on X (Twitter) [@17rainLF](https://x.com) or Telegram.
