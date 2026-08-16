@@ -1,267 +1,300 @@
 LeadEngine AI
 
-AI-powered B2B Prospecting & Website Audit Platform
-
 Status: Available for Acquisition
 
-LeadEngine AI is a production-oriented SaaS platform designed for B2B lead generation, website analysis, AI-powered auditing, and multi-tenant workflows.
+LeadEngine AI is an MVP with production infrastructure designed for AI-powered B2B lead generation, website analysis, and automated outreach workflows.
 
-The public repository contains a technical overview of the platform. The complete functional source code is maintained in a private repository and is included in the acquisition.
+The platform combines business discovery, automated website auditing, AI-powered analysis, personalized outreach generation, SaaS authentication, usage limits, background processing, and billing infrastructure.
 
-1. Acquisition Overview
-
-The buyer receives a complete software foundation that can be integrated into an existing product, internal sales workflow, marketing platform, or further developed as a standalone SaaS.
-
-The main value of the acquisition is the existing architecture, implemented workflows, integrations, backend/frontend infrastructure, and source code, allowing a buyer to continue development without building the entire system from scratch.
-
-2. Technology Stack
+Technology Stack
 Backend
-Python 3.11+
 FastAPI
+Python 3.11+
 PostgreSQL
+SQLAlchemy
+Alembic
 Redis
 Celery
-REST API
 Frontend
 Next.js
 TypeScript
 Tailwind CSS
-Responsive web dashboard
+React
 Infrastructure
 Docker
 Docker Compose
-Containerized application services
-AI
-OpenAI API
-Anthropic API
-Provider-based AI architecture
-3. Core Platform Capabilities
-B2B Lead Generation
-
-The platform provides workflows for discovering potential business leads based on campaign parameters such as:
-
-Location
-Country
-City
-Business category
-Lead volume
-
-Campaigns can be created and processed through the platform dashboard.
-
-Website Analysis
-
-For discovered companies, the platform can perform automated website analysis covering areas such as:
-
-Performance
-SEO
-Conversion-related issues
-Critical website problems
-Technical website issues
-
-The resulting analysis is presented inside the dashboard.
-
-AI Analysis
-
-AI providers are used to analyze discovered website issues and generate actionable recommendations.
-
-The platform can also generate personalized outreach based on the discovered problems of a specific company.
-
-Multi-Tenant SaaS
-
-The application includes a multi-tenant foundation designed around organizations/workspaces and isolated user data.
-
-The architecture is designed so that the platform can serve multiple organizations from the same application infrastructure.
-
-4. Lead Workflow
-
-The primary workflow is:
-
-Campaign Creation → Lead Discovery → Company Selection → Website Audit → AI Analysis → Recommendations → Personalized Outreach
-
-A typical campaign starts with search parameters such as:
-
-City
-Country
-Business category
-Leads per day
-
-After leads are discovered, a company can be selected and its website audit can be executed.
-
-The resulting audit provides identified issues and AI-generated recommendations, which can then be used to create personalized outreach.
-
-5. Engineering Architecture
-
-The application is separated into frontend and backend services.
-
-Backend
-
-The FastAPI backend provides:
-
-REST API endpoints
-Authentication-related functionality
-Organization/workspace management
-Lead and campaign operations
-Website audit operations
-AI provider communication
+Nginx
+Prometheus
+Grafana
+Flower
+Core Capabilities
+B2B business discovery
+AI-powered website audits
+SEO analysis
+Performance analysis
+SSL and domain checks
+Conversion analysis
+AI-generated business insights
+Personalized cold email generation
+LinkedIn message generation
+Loom script generation
+PDF report generation
+Automated email delivery
+Follow-up email scheduling
+Multi-tenant user data isolation
+Usage and plan limits
+Stripe billing integration
+White-label branding foundation
+REST API
 Background task processing
-Database interaction
-Background Processing
+Lead Generation Workflow
 
-Long-running operations are handled through background workers.
+The main workflow is implemented end-to-end:
 
-Redis is used as part of the queue/background-processing infrastructure, with Celery responsible for executing asynchronous tasks.
+User creates a campaign with targeting parameters.
+The system searches for businesses matching the selected criteria.
+Discovered leads are stored and scored.
+A website audit can be triggered for a lead.
+Multiple technical checkers analyze the website.
+AI analyzes the collected audit data.
+The system generates personalized outreach content.
+A PDF audit report can be generated.
+Outreach emails can be sent through the configured email provider.
+Follow-up sequences can be scheduled.
+Business Discovery
 
-This allows resource-intensive operations such as lead processing and website analysis to run independently from the main API request lifecycle.
+The platform supports multiple external data sources:
 
-6. Data Layer
+Google Places API
+SerpAPI
+Yelp Fusion API
+Mock provider fallback
 
-The platform uses PostgreSQL as its primary relational database.
+The discovery layer uses provider fallbacks so the application can operate in demo/mock mode when external API credentials are unavailable.
 
-The database layer contains the structures required for areas such as:
+Lead information may include:
 
-Users
-Organizations/workspaces
-Campaigns
-Leads
-Companies
-Audits
-AI-generated analysis
-Application data
+Business name
+Website
+Phone
+Email
+Address
+City
+State
+Country
+Rating
+Review count
+Business category
+Source
+Website Audit Engine
 
-Database migrations and schema are included in the acquisition.
+Website audits are performed through multiple independent checkers.
 
-7. Authentication & Multi-Tenancy
+Technical Checks
+SSL validity
+Domain information
+Website performance
+SEO metadata
+H1/title/meta analysis
+Sitemap and robots.txt
+Broken-link checks
+Conversion elements
+Contact forms
+Phone CTAs
+Chat/review elements
 
-The platform includes authentication and organization/workspace-oriented access control.
+The checkers can run asynchronously as part of the audit workflow.
 
-The architecture is designed around tenant separation so that multiple organizations can operate within the same SaaS environment.
+AI Layer
 
-Role-based access control (RBAC) is included where implemented within the application.
-
-8. AI Provider Architecture
-
-The platform integrates external AI providers through API-based communication.
-
-Current providers include:
+The AI layer currently supports:
 
 OpenAI
 Anthropic
 
-The architecture allows the AI layer to be developed independently from the rest of the application, making future provider changes or additional AI integrations possible without redesigning the entire platform.
+OpenAI is used as the primary provider, with Anthropic available as an alternative/fallback provider.
 
-9. External Integrations
+AI is used for:
 
-The platform is designed to work with external services through APIs.
+Website audit analysis
+Identification of critical issues
+Business-impact analysis
+Recommended fixes
+Priority scoring
+Personalized email generation
+LinkedIn message generation
+Loom script generation
 
-Depending on the deployed configuration, integrations can include services related to:
+The code contains a provider abstraction layer, making it possible to add or replace providers without redesigning the entire application.
 
-Business/lead discovery
-Website analysis
-AI processing
-Email/outreach
-Performance analysis
+Current limitation: model names are configured in code rather than being fully runtime-configurable.
 
-The exact API configuration, credentials, provider setup, and deployment environment are handled separately from the public repository and can be reviewed by a qualified buyer during technical due diligence.
+Background Processing
 
-10. Infrastructure & Deployment
+Background processing is implemented using:
 
-The application is containerized using Docker.
+Celery
+Redis
+Celery Beat
+
+Separate task queues are used for workloads such as:
+
+Website audits
+Email delivery
+Cleanup tasks
+Follow-up sequences
+Failed email retries
+
+Tasks include retry mechanisms and scheduled execution.
+
+SaaS / Authentication
+
+The platform includes:
+
+User registration
+Login/logout
+JWT authentication
+HttpOnly cookies
+Password hashing with bcrypt
+Password reset
+Email verification
+User-level data isolation
+Usage quotas
+Subscription plans
+Stripe billing integration
+
+Current plans include:
+
+Trial
+Starter
+Growth
+Agency
+
+Current limitation: the application currently uses a single user role. A separate role-based access-control system is not implemented.
+
+Infrastructure
+
+A production Docker Compose configuration is included with services for:
+
+PostgreSQL
+Redis
+FastAPI backend
+Next.js frontend
+Celery workers
+Celery Beat
+Flower
+Prometheus
+Grafana
+Nginx
+
+Health checks and persistent volumes are configured.
+
+The infrastructure provides a strong foundation for deployment, but additional operational hardening would be required for large-scale production use.
+
+Testing & CI/CD
+
+The current project does not contain a meaningful automated test suite.
+
+Current state:
+
+Automated unit tests: Not implemented
+Integration tests: Not implemented
+E2E tests: Not implemented
+CI/CD pipeline: Not active
+GitHub Actions: deployment template only
+
+The application has been manually tested through the API and application interface.
+
+Current Technical Limitations
+
+The project is an MVP and has several areas that a buyer may want to develop further:
+
+No meaningful automated test coverage
+No active CI/CD pipeline
+Basic scraping rather than sophisticated crawling
+No JavaScript browser rendering for scraping
+Limited request/concurrency management
+No automated database backup strategy
+No disaster-recovery system
+No horizontal scaling configuration
+No centralized log aggregation
+No advanced role/permission system
+AI model names are not fully runtime-configurable
+
+These are primarily operational and scaling improvements, rather than a requirement to redesign the core architecture.
+
+Documentation
+
+The repository contains technical and project documentation covering areas such as:
+
+Installation
+Deployment
+Architecture
+Features
+API configuration
+Security
+Privacy
+Terms of Service
+SLA
+Project setup
+Acquisition Includes
 
 The acquisition includes:
 
-Docker configuration
-Docker Compose configuration
-Application services
-Database configuration
-Redis configuration
-Deployment-related configuration
-
-This provides a reproducible environment for local development and deployment.
-
-11. Repository Structure
-/backend
-/frontend
-/docker
-/database
-/docs
-
-
-The private repository contains the complete functional implementation.
-
-The public repository intentionally excludes proprietary production source code.
-
-12. Acquisition Includes
-
-The acquisition includes:
-
-Complete private GitHub repository
-Full functional source code
-Backend source code
-Frontend source code
+Full source code
+Complete GitHub repository
+Backend
+Frontend
 Database schema
-Database migrations
 Docker configuration
 Deployment configuration
-REST API collection
-Technical documentation
-Architecture documentation
-Existing application workflows
+API configuration
+Documentation
+Architecture
+Intellectual property transfer
+Product demonstration
+
+The codebase uses standard open-source frameworks and libraries.
+
+Third-party API credentials and external service accounts are not included in the acquisition and would need to be configured by the buyer.
+
+Current Product Position
+
+LeadEngine AI should be considered a functionally developed MVP with production infrastructure, rather than a mature enterprise SaaS.
+
+Its primary value for a technical buyer is the existing:
+
+Software architecture
+Lead-generation workflow
+Website audit engine
 AI integration layer
-Multi-tenant SaaS foundation
-Intellectual property rights to the transferred work
-Loom product demonstration
+SaaS foundation
+Background-processing infrastructure
+Billing integration
+Docker deployment environment
+Documentation
 
-Third-party services, API accounts, subscriptions, and credentials are subject to their respective provider terms and are not represented as transferable assets unless explicitly agreed.
+A technical team can use the existing foundation to continue development, integrate the technology into an existing product, or develop it into a standalone SaaS.
 
-13. Current Product Status
+Acquisition
 
-LeadEngine AI is being offered as a technology acquisition.
+LeadEngine AI is available for acquisition.
 
-The project does not currently have significant commercial traction or established recurring revenue.
-
-The acquisition is therefore primarily focused on the technology, architecture, implemented functionality, source code, and intellectual property rather than an existing revenue-generating business.
-
-14. Technical Due Diligence
-
-For a serious buyer, additional technical information can be provided during the evaluation process, including:
-
-Full lead-processing workflow
-API and external-service configuration
-AI provider implementation
-Background worker architecture
-Database structure
-Authentication and multi-tenancy implementation
-Deployment architecture
-Repository structure
-Relevant technical documentation
-
-Access to the private repository can be provided as part of an appropriate technical evaluation process.
-
-15. Demo
-
-A Loom walkthrough demonstrates the main platform workflow:
-
-Campaign → Lead Discovery → Company → Website Audit → AI Analysis → Personalized Outreach
-
-The demonstration is available to prospective buyers.
-
-16. Transaction
+The transaction includes the complete software codebase and intellectual property.
 
 Preferred transaction methods:
 
 Escrow.com
 Wire transfer
 
-Alternative arrangements can be discussed privately.
+Other arrangements can be discussed privately.
 
-The final transaction structure, scope of transferred IP, and included assets will be agreed upon before completion of the acquisition.
-
-17. Contact
-
-LeadEngine AI
+Contact
 
 Email:
 midorimavpotoke@gmail.com
 
 X:
 https://x.com/17rainLF
+
+This repository is provided as a technical overview of LeadEngine AI for acquisition discussions. The project is presented transparently as an MVP with production infrastructure and known areas requiring further development.
